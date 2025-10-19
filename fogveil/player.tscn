@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://5be3oqerfk0i"]
+
+[ext_resource type="Texture2D" uid="uid://b7tno1qok5vm1" path="res://PlayerSprites.png" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://v7bpfbsamgcd" path="res://animated_sprite_2d.gd" id="3_hqtel"]
+[ext_resource type="Script" uid="uid://bmapi5x5rpsjp" path="res://player.gd" id="3_i3pqv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i3pqv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onrkg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(4, 4)
+
+[sub_resource type="Gradient" id="Gradient_i3pqv"]
+offsets = PackedFloat32Array(0, 0.714286, 0.75974, 0.922078)
+colors = PackedColorArray(0.897727, 0.897727, 0.897727, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hqtel"]
+gradient = SubResource("Gradient_i3pqv")
+fill = 1
+fill_from = Vector2(0.5, 0.504587)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i3pqv"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("3_i3pqv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_i3pqv")
+script = ExtResource("3_hqtel")
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = SubResource("GradientTexture2D_hqtel")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_i3pqv")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.5, 2.5)
