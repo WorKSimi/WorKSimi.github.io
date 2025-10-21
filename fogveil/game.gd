@@ -11,8 +11,9 @@ var ADDRESS = "localhost"
 var peer = ENetMultiplayerPeer.new()
 
 func _on_line_edit_text_changed(new_text: String) -> void:
-	ADDRESS = line_edit.text
-	print(ADDRESS)
+	#ADDRESS = line_edit.text
+	#print(ADDRESS)
+	pass
 
 func _on_host_pressed():
 	peer.create_server(PORT)
