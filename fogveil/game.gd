@@ -1,14 +1,18 @@
 extends Node
 
 @onready var multiplayer_ui = $UI/Multiplayer
-@onready var line_edit: LineEdit = $UI/Multiplayer/VBoxContainer/Name
+@onready var line_edit: LineEdit = $UI/Multiplayer/VBoxContainer/LineEdit
 
 const PLAYER = preload("res://player.tscn")
 
 const PORT = 25565
-const ADDRESS = "73.199.103.78"
+var ADDRESS = "localhost"
 
 var peer = ENetMultiplayerPeer.new()
+
+func _on_line_edit_text_changed(new_text: String) -> void:
+	ADDRESS = line_edit.text
+	print(ADDRESS)
 
 func _on_host_pressed():
 	peer.create_server(PORT)
